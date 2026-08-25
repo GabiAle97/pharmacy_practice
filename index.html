@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RE3 — KEY BOARD 1.1</title>
+<style>
+  @import url('style.css');
+</style>
+</head>
+<body>
+<div class="desktop">
+
+  <section class="program">
+    <div class="titlebar">
+      <span class="window-button left"></span>
+      PROGRAM 1.1
+      <span class="window-button right"></span>
+    </div>
+    <div class="screen" id="screen">
+      <div class="version">Umbrella Security System</div>
+      <div class="line normal" style="display:none">First Class</div>
+      <div class="line normal" style="display:none">Medical Storage Room:</div>
+      <div class="line normal" style="display:none"> Security Authorization</div>
+      <div class="line normal" style="display:none">Current Status: <span id="currentStatus" class="red">Locked</span></div>
+      <div class="line normal" style="display:none">Please enter password and</div>
+      <div class="line normal" style="display:none">then press the RETURN key</div>
+      <div class="line error" style="display:none">Enter Password:<span id="typedTextPI"></span></div>
+      <div class="line red error" style="display:none">ERROR...</div>
+      <div class="line red error" style="display:none">ERROR...</div>
+      <div class="line red error" style="display:none">Invalid password.</div>
+      <div class="line red error" style="display:none">Please re-enter password and</div>
+      <div class="line red error" style="display:none">then press the RETURN key.</div>
+      <div class="line prompt" id="promptLine" style="display:none">Enter Password:<span id="typedText"></span><span class="cursor"></span></div>
+    </div>
+  </section>
+
+  <aside class="management">
+    <div class="mg-title">MANAGEMENT SYSTEM</div>
+    <div class="digits"><div class="digit">77</div><div class="digit">52</div><div class="digit">9:28</div></div>
+    <div class="mg-labels"><span>ARM</span><span>SECURITY</span><span>SYSTEM</span></div>
+    <div class="bar b1"><i></i><i></i></div>
+    <div class="bar b2"><i></i><i></i><i></i></div>
+    <div class="bar b3"><i></i><i></i></div>
+    <button class="system">SYSTEM</button>
+  </aside>
+
+  <section class="keyboard">
+    <div class="kb-titlebar">
+      <span class="window-button left"></span>
+      KEY BOARD 1.1
+      <span class="window-button right"></span>
+    </div>
+
+    <div class="keys" id="keys">
+      <button class="key esc" data-key="ESC">ESC</button>
+      <button class="key" data-key="A">A</button>
+      <button class="key" data-key="B">B</button>
+      <button class="key" data-key="C">C</button>
+      <button class="key" data-key="D">D</button>
+      <button class="key" data-key="E">E</button>
+      <button class="key" data-key="F">F</button>
+      <button class="key" data-key="G">G</button>
+      <button class="key" data-key="H">H</button>
+      <button class="key bs" data-key="BS">BS</button>
+
+      <button class="key" data-key="I">I</button>
+      <button class="key" data-key="J">J</button>
+      <button class="key" data-key="K">K</button>
+      <button class="key" data-key="L">L</button>
+      <button class="key" data-key="M">M</button>
+      <button class="key" data-key="N">N</button>
+      <button class="key" data-key="O">O</button>
+      <button class="key" data-key="P">P</button>
+      <button class="key" data-key="Q">Q</button>
+      <button class="key enter" data-key="ENTER" aria-label="Enter"></button>
+
+      <button class="key" data-key="R">R</button>
+      <button class="key" data-key="S">S</button>
+      <button class="key" data-key="T">T</button>
+      <button class="key" data-key="U">U</button>
+      <button class="key" data-key="V">V</button>
+      <button class="key" data-key="W">W</button>
+      <button class="key" data-key="X">X</button>
+      <button class="key" data-key="Y">Y</button>
+      <button class="key" data-key="Z">Z</button>
+    </div>
+  </section>
+
+  <div class="hint">Mouse: click directo · Flechas: mover cursor · C: confirmar tecla · Esc: cancelar</div>
+</div>
+
+<script src="re3_keyboard.js"></script>
+</body>
+</html>

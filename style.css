@@ -1,0 +1,180 @@
+:root{
+    --metal:#9b9b9b;
+    --metal-hi:#d9d9d9;
+    --metal-lo:#4e4e4e;
+    --panel:#777;
+    --screen:#070807;
+    --ink:#171717;
+    --green:#22d10b;
+    --red:#e40018;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 50% 20%, #555 0, #292929 42%, #111 100%);
+    font-family:"Courier New",monospace;
+    color:#eee;
+  }
+
+  .desktop{
+    position:relative;
+    width:100vw;height:100vh;
+    min-width:900px;min-height:600px;
+    background:
+      linear-gradient(135deg,rgba(255,255,255,.06),transparent 28%),
+      repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 3px);
+  }
+
+  /* Main PROGRAM window */
+  .program{
+    position:absolute;left:3%;top:2.5%;
+    width:78%;height:70%;
+    border:4px solid #303030;
+    outline:2px solid #d8d8d8;
+    background:#101010;
+    box-shadow:7px 7px 0 rgba(0,0,0,.45), inset 0 0 0 2px #8b8b8b;
+  }
+  .titlebar,.kb-titlebar{
+    height:36px;
+    background:linear-gradient(#d7d7d7,#929292);
+    border-bottom:3px solid #555;
+    color:#333;
+    display:flex;align-items:center;justify-content:center;
+    font-family:Georgia,serif;font-weight:bold;
+    letter-spacing:2px;
+    position:relative;
+    text-shadow:1px 1px #eee;
+  }
+  .window-button{
+    position:absolute;top:5px;width:23px;height:23px;
+    border:2px solid #505050;
+    background:#bcbcbc;
+    box-shadow:inset 2px 2px #eee,inset -2px -2px #666;
+  }
+  .window-button.left{left:5px}
+  .window-button.right{right:5px}
+  .window-button.left:after{content:"";display:block;width:9px;height:3px;background:#444;margin:8px auto}
+  .window-button.right:after{content:"";display:block;width:8px;height:8px;border:2px solid #555;margin:5px auto}
+
+  .screen{
+    position:absolute;left:10px;right:10px;top:49px;bottom:10px;
+    padding:12px 15px;
+    background:
+      radial-gradient(ellipse at center,rgba(60,60,60,.28),transparent 68%),
+      #090a09;
+    overflow:hidden;
+    font-size:clamp(18px,2.25vw,32px);
+    line-height:1.22;
+    letter-spacing:.02em;
+    text-shadow:0 0 2px #aaa;
+  }
+  .screen .version{position:absolute;right:30px;top:10px}
+  .line{white-space:pre}
+  .red{color:#f10b1b;text-shadow:0 0 2px #900}
+  .cursor{display:inline-block;width:.62em;height:1em;background:#eee;vertical-align:-.1em;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  /* Side management panel */
+  .management{
+    position:absolute;right:3%;top:19%;
+    width:17%;min-width:190px;height:47%;
+    border:4px solid #414141;outline:2px solid #cfcfcf;
+    background:linear-gradient(#a8a8a8,#737373);
+    box-shadow:6px 6px 0 rgba(0,0,0,.4);
+  }
+  .mg-title{height:35px;border-bottom:3px solid #555;text-align:center;padding-top:7px;color:#222;font:bold 15px Georgia,serif;letter-spacing:1px}
+  .digits{display:flex;gap:5px;padding:14px 10px 8px}
+  .digit{
+    flex:1;background:#050705;border:3px solid #4c4c4c;
+    height:47px;text-align:center;padding-top:6px;
+    color:#19d800;font-size:23px;text-shadow:0 0 5px #0c0;
+  }
+  .mg-labels{display:flex;justify-content:space-around;color:#222;font:bold 12px Georgia,serif}
+  .bar{height:14px;margin:11px;border:2px solid #454545;background:#101010;display:flex}
+  .bar i{display:block;height:100%}
+  .b1 i:first-child{width:64%;background:#1010a8}.b1 i:last-child{flex:1;background:#b00000}
+  .b2 i:first-child{width:38%;background:#00a000}.b2 i:nth-child(2){width:27%;background:#d5c900}.b2 i:last-child{flex:1;background:#1110a0}
+  .b3 i:first-child{width:87%;background:#c000a0}.b3 i:last-child{flex:1;background:#1110a0}
+  .system{display:block;margin:28px auto 0;padding:7px 18px;background:#aaa;border:2px solid #555;box-shadow:inset 2px 2px #eee,inset -2px -2px #666;font:bold 14px Georgia,serif}
+
+  /* Keyboard */
+  .keyboard{
+    position:absolute;left:15%;bottom:5%;
+    width:70%;height:37%;
+    border:4px solid #3e3e3e;outline:2px solid #cfcfcf;
+    background:#858585;
+    box-shadow:7px 7px 0 rgba(0,0,0,.5);
+    padding:0 10px 10px;
+  }
+  .kb-titlebar{height:35px;margin:0 -10px 8px;font-size:18px}
+  .keys{
+    display:grid;
+    grid-template-columns:repeat(9,1fr) 1fr;
+    grid-template-rows:repeat(3,1fr);
+    gap:5px;
+    height:calc(100% - 43px);
+  }
+  button.key{
+    position:relative;
+    border:3px solid #555;
+    border-right-color:#3b3b3b;border-bottom-color:#3b3b3b;
+    background:linear-gradient(145deg,#c7c7c7 0,#a4a4a4 48%,#8d8d8d 100%);
+    box-shadow:inset 2px 2px #e5e5e5,inset -2px -2px #686868;
+    color:#565656;
+    font-family:Arial,sans-serif;
+    font-weight:500;
+    font-size:clamp(16px,2vw,29px);
+    cursor:pointer;
+    user-select:none;
+    transition:filter .04s,transform .04s;
+  }
+  button.key:hover{filter:brightness(1.08)}
+  button.key:active,.key.selected{
+    transform:translate(2px,2px);
+    box-shadow:inset -2px -2px #e5e5e5,inset 2px 2px #686868;
+    background:#858585;
+    color:#333;
+  }
+  .key.enter{
+    grid-column:10;grid-row:2 / span 2;
+    font-size:0;
+  }
+  .key.enter:after{
+    content:"?";
+    font-size:clamp(28px,3vw,44px);
+    position:absolute;left:50%;top:50%;transform:translate(-35%,-50%);
+  }
+  .key.esc,.key.bs{font-size:clamp(13px,1.55vw,22px)}
+  .key.blank{visibility:hidden;pointer-events:none}
+
+  .key.focus{
+    outline:3px solid var(--green);
+    outline-offset:-3px;
+    box-shadow:0 0 10px 2px rgba(34,209,11,.7), inset 2px 2px #e5e5e5, inset -2px -2px #686868;
+    animation:kbpulse 1s ease-in-out infinite;
+  }
+  @keyframes kbpulse{
+    0%,100%{filter:brightness(1)}
+    50%{filter:brightness(1.25)}
+  }
+
+  .hint{
+    position:absolute;left:4%;bottom:1.2%;
+    color:#aaa;font:12px Arial,sans-serif;opacity:.8
+  }
+
+  body:after{
+    content:"";position:fixed;inset:0;pointer-events:none;
+    background:
+      repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 3px),
+      radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.38) 100%);
+    mix-blend-mode:screen;
+  }
+
+  @media(max-width:1000px){
+    .keyboard{left:5%;width:90%}
+    .program{width:76%}
+    .management{right:1%;width:20%}
+  }

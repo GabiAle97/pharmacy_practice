@@ -3,15 +3,17 @@
   const typedTextPI = document.getElementById('typedTextPI');
   const normalLines = [...document.querySelectorAll('.screen .line.normal')];
   const errorLines = [...document.querySelectorAll('.screen .line.error')];
+  const successLines = [...document.querySelectorAll('.screen .line.success')];
   const promptLine = document.getElementById('promptLine');
   const keys = [...document.querySelectorAll('.key')];
+  const solutions = ["SAFSPRIN", "ADRAVIL", "AQUACURE"];
 
   let text = "";
   let activeSeqToken = 0;
   let isTypingSequence = false;
 
   const templates = new Map();
-  [...normalLines, ...errorLines, promptLine].forEach(el => {
+  [...normalLines, ...errorLines, ...successLines, promptLine].forEach(el => {
     templates.set(el, el.cloneNode(true));
   });
 
@@ -82,6 +84,7 @@
 
     normalLines.forEach(l => l.style.display = "none");
     errorLines.forEach(l => l.style.display = "none");
+    successLines.forEach(l => l.style.display = "none");
     promptLine.style.display = "none";
 
     for (let i = 0; i < lines.length; i++) {
@@ -95,7 +98,9 @@
     }
 
     if (token === activeSeqToken) {
-      promptLine.style.display = "";
+      if (lines !== successLines) {
+        promptLine.style.display = "";
+      }
       render();
       isTypingSequence = false;
       restoreKeyboardFocus();
@@ -125,18 +130,33 @@
         const currentText = text;
         text = "";
         render();
-        
-        const firstErrorLine = errorLines[0];
-        const piSpan = firstErrorLine.querySelector('#typedTextPI');
-        if (piSpan) piSpan.textContent = currentText;
-        templates.set(firstErrorLine, firstErrorLine.cloneNode(true));
+        const isValidSolution = currentText.length >= 7 && (
+          solutions.includes(currentText) || currentText.startsWith("ADRAVIL")
+        );
+        if (isValidSolution) {
+          const firstSuccessLine = successLines[0];
+          templates.set(firstSuccessLine, firstSuccessLine.cloneNode(true));
+          playSequence(successLines, 25, 500).then(() => {
+            sleep(1000).then(() => {
+              text = "";
+              render();
+              playSequence(normalLines, 25, 500);
+            });
+          });
+          return;
+        } else {
+          const firstErrorLine = errorLines[0];
+          const piSpan = firstErrorLine.querySelector('#typedTextPI');
+          if (piSpan) piSpan.textContent = currentText;
+          templates.set(firstErrorLine, firstErrorLine.cloneNode(true));
 
-        playSequence(errorLines, 25, 500);
+          playSequence(errorLines, 25, 500);
+        }
       }
       return;
     }
 
-    if(/^[A-Z]$/.test(value) && text.length < 24){
+    if(/^[A-Z]$/.test(value) && text.length < 8){
       text += value;
       render();
     }

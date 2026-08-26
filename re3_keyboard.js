@@ -198,7 +198,7 @@
   }
 
   // DAS Engine
-  const DAS_DELAY = 220;
+  const DAS_DELAY = 150;
   const DAS_RATE = 40;
   const ACTION_DELAY = 33;
 

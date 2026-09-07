@@ -5,10 +5,15 @@
   const errorLines = [...document.querySelectorAll('.screen .line.error')];
   const successLines = [...document.querySelectorAll('.screen .line.success')];
   const promptLine = document.getElementById('promptLine');
+  const currentStatus = document.getElementById('currentStatus');
+  const statusLine = currentStatus.closest('.line');
+  const finalScreen = document.getElementById('finalScreen');
   const keys = [...document.querySelectorAll('.key')];
-  const solutions = ["SAFSPRIN", "ADRAVIL", "AQUACURE"];
+  const validPasswords = new Set(["ADRAVIL", "VALKA", "MUFAS"]);
+  const usedPasswords = new Set();
 
   let text = "";
+  let lockedCount = 3;
   let activeSeqToken = 0;
   let isTypingSequence = false;
 
@@ -21,6 +26,19 @@
     typedText.textContent = text;
   }
 
+  function updateStatus(){
+    const isUnlocked = lockedCount === 0;
+    const statusElement = statusLine.querySelector('#currentStatus');
+    statusElement.textContent = isUnlocked ? "Unlocked" : `${lockedCount} Locked`;
+    statusElement.classList.toggle("red", !isUnlocked);
+    statusElement.classList.toggle("green", isUnlocked);
+    templates.set(statusLine, statusLine.cloneNode(true));
+  }
+
+  function showFinalScreen(){
+    finalScreen.classList.add("visible");
+  }
+
   function flash(key){
     key.classList.add("selected");
     setTimeout(() => key.classList.remove("selected"), 90);
@@ -30,6 +48,7 @@
 
   function typeElement(el, charDelay = 25, seqToken) {
     return new Promise((resolve) => {
+      if (el === statusLine) updateStatus();
       const template = templates.get(el);
       if (template) el.innerHTML = template.innerHTML;
 
@@ -130,10 +149,18 @@
         const currentText = text;
         text = "";
         render();
-        const isValidSolution = currentText.length >= 7 && (
-          solutions.includes(currentText) || currentText.startsWith("ADRAVIL")
-        );
+        if (lockedCount === 0 && currentText === "BASEMENT") {
+          showFinalScreen();
+          return;
+        }
+
+        const isValidSolution = validPasswords.has(currentText);
         if (isValidSolution) {
+          if (!usedPasswords.has(currentText)) {
+            usedPasswords.add(currentText);
+            lockedCount = Math.max(0, lockedCount - 1);
+            updateStatus();
+          }
           const firstSuccessLine = successLines[0];
           templates.set(firstSuccessLine, firstSuccessLine.cloneNode(true));
           playSequence(successLines, 25, 500).then(() => {

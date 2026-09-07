@@ -22,7 +22,7 @@
       <div class="line normal" style="display:none">First Class</div>
       <div class="line normal" style="display:none">Medical Storage Room:</div>
       <div class="line normal" style="display:none"> Security Authorization</div>
-      <div class="line normal" style="display:none">Current Status: <span id="currentStatus" class="red">Locked</span></div>
+      <div class="line normal" style="display:none">Current Status: <span id="currentStatus" class="red">3 Locked</span></div>
       <div class="line normal" style="display:none">Please enter password and</div>
       <div class="line normal" style="display:none">then press the RETURN key</div>
       <div class="line error" style="display:none">Enter Password:<span id="typedTextPI"></span></div>
@@ -35,7 +35,6 @@
       <div class="line success" style="display:none">Room Access: Confirmed</div>
       <div class="line success" style="display:none">Deactivating lock.</div>
       <div class="line success" style="display:none">Please wait...</div>
-      <div class="line success" style="display:none">Current Status: Unlocked</div>
 
       <div class="line prompt" id="promptLine" style="display:none">Enter Password:<span id="typedText"></span><span class="cursor"></span></div>
     </div>
@@ -96,6 +95,12 @@
   <div class="hint">Mouse: click directo · Flechas: mover cursor · C: confirmar tecla · Esc: cancelar</div>
 </div>
 
-<script src="re3_keyboard.js"></script>
+<div class="final-screen" id="finalScreen" aria-live="polite">
+  <div>ME ATRAPASTE, ES CINE.</div>
+  <div>En el discord de la Basement Cup, escribe en "chat-esp"</div>
+  <div>la palabra "MURGABITO"</div>
+</div>
+
+<script src="re3_keyboard.js?v=20260906b"></script>
 </body>
 </html>

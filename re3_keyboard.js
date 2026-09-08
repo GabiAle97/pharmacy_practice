@@ -11,6 +11,10 @@
   const keys = [...document.querySelectorAll('.key')];
   const validPasswords = new Set(["ADRAVIL", "NICHOLAI", "STARS"]);
   const usedPasswords = new Set();
+  const moveSound = new Audio("move.m4a");
+  const inputSound = new Audio("input.m4a");
+  const unlockSound = new Audio("unlock.m4a");
+  const successSound = new Audio("success.m4a");
 
   let text = "";
   let lockedCount = 3;
@@ -21,6 +25,11 @@
   [...normalLines, ...errorLines, ...successLines, promptLine].forEach(el => {
     templates.set(el, el.cloneNode(true));
   });
+
+  function playSound(sound) {
+    sound.currentTime = 0;
+    sound.play().catch(() => {});
+  }
 
   function render(){
     typedText.textContent = text;
@@ -45,8 +54,9 @@
   }
 
   const sleep = ms => new Promise(res => setTimeout(res, ms));
+  const SPEED_FACTOR = 1.15;
 
-  function typeElement(el, charDelay = 25, seqToken) {
+  function typeElement(el, charDelay = Math.round(25 * SPEED_FACTOR), seqToken) {
     return new Promise((resolve) => {
       if (el === statusLine) updateStatus();
       const template = templates.get(el);
@@ -76,6 +86,7 @@
         }
         const item = textNodes[nodeIdx];
         item.node.nodeValue += item.fullText[charIdx];
+        playSound(moveSound);
         charIdx++;
         if (charIdx >= item.fullText.length) {
           nodeIdx++;
@@ -96,7 +107,7 @@
     setFocus(0, 1);
   }
 
-  async function playSequence(lines, charDelay = 25, lineDelay = 500) {
+  async function playSequence(lines, charDelay = Math.round(25 * SPEED_FACTOR), lineDelay = 500) {
     const token = ++activeSeqToken;
     isTypingSequence = true;
     clearKeyboardFocus();
@@ -128,12 +139,13 @@
 
   function press(value, element){
     if(isTypingSequence) return;
+    playSound(inputSound);
     if(element) flash(element);
 
     if(value === "ESC"){
       text = "";
       render();
-      playSequence(normalLines, 25, 500);
+      playSequence(normalLines, Math.round(25 * SPEED_FACTOR), 500);
       return;
     }
 
@@ -150,6 +162,7 @@
         text = "";
         render();
         if (lockedCount === 0 && currentText === "BASEMENT") {
+          playSound(successSound);
           showFinalScreen();
           return;
         }
@@ -159,15 +172,16 @@
           if (!usedPasswords.has(currentText)) {
             usedPasswords.add(currentText);
             lockedCount = Math.max(0, lockedCount - 1);
+            playSound(unlockSound);
             updateStatus();
           }
           const firstSuccessLine = successLines[0];
           templates.set(firstSuccessLine, firstSuccessLine.cloneNode(true));
-          playSequence(successLines, 25, 500).then(() => {
+          playSequence(successLines, Math.round(25 * SPEED_FACTOR), 500).then(() => {
             sleep(1000).then(() => {
               text = "";
               render();
-              playSequence(normalLines, 25, 500);
+              playSequence(normalLines, Math.round(25 * SPEED_FACTOR), 500);
             });
           });
           return;
@@ -177,7 +191,7 @@
           if (piSpan) piSpan.textContent = currentText;
           templates.set(firstErrorLine, firstErrorLine.cloneNode(true));
 
-          playSequence(errorLines, 25, 500);
+          playSequence(errorLines, Math.round(25 * SPEED_FACTOR), 500);
         }
       }
       return;
@@ -222,12 +236,13 @@
     if(nc < 0) nc = grid[nr].length - 1;
     if(nc > grid[nr].length - 1) nc = 0;
     setFocus(nr, nc);
+    playSound(moveSound);
   }
 
   // DAS Engine
-  const DAS_DELAY = 150;
-  const DAS_RATE = 40;
-  const ACTION_DELAY = 33;
+  const DAS_DELAY = Math.round(150 * SPEED_FACTOR);
+  const DAS_RATE = Math.round(40 * SPEED_FACTOR);
+  const ACTION_DELAY = Math.round(33 * SPEED_FACTOR);
 
   let activeArrowKey = null;
   let dasTimeout = null;
@@ -307,5 +322,5 @@
 
   window.addEventListener("blur", stopDAS);
 
-  playSequence(normalLines, 25, 500);
+  playSequence(normalLines, Math.round(25 * SPEED_FACTOR), 500);
 })();

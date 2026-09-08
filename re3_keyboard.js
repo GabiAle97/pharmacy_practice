@@ -9,7 +9,7 @@
   const statusLine = currentStatus.closest('.line');
   const finalScreen = document.getElementById('finalScreen');
   const keys = [...document.querySelectorAll('.key')];
-  const validPasswords = new Set(["ADRAVIL", "VALKA", "MUFAS"]);
+  const validPasswords = new Set(["ADRAVIL", "NICHOLAI", "STARS"]);
   const usedPasswords = new Set();
 
   let text = "";

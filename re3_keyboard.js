@@ -143,9 +143,7 @@
     if(element) flash(element);
 
     if(value === "ESC"){
-      text = "";
-      render();
-      playSequence(normalLines, Math.round(25 * SPEED_FACTOR), 500);
+      window.location.href = "https://gabiale97.github.io/BWC2026";
       return;
     }
 
